@@ -12,7 +12,7 @@ namespace WebApiStarter.Components.Example
         [Required]
         public string Prop2 { get; set; }
 
-        public override void Mapping(IDataReader reader)
+        public override void Map(IDataReader reader)
         {
             Id    = (HasColumn(reader, "Id"))    ? Convert.ToInt32(reader["Id"].ToString()) : Id;
             Prop1 = (HasColumn(reader, "Prop1")) ? reader["Prop1"].ToString()               : Prop1;

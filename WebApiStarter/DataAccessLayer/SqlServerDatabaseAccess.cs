@@ -43,7 +43,7 @@ namespace WebApiStarter.DataAccessLayer
             while (reader.Read())
             {
                 T model = new T();
-                model.Mapping(reader);
+                model.Map(reader);
                 results.Add(model);
             }
 

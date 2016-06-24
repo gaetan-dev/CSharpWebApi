@@ -5,7 +5,7 @@ namespace WebApiStarter
 {
     public abstract class Model
     {
-        public abstract void Mapping(IDataReader reader);
+        public abstract void Map(IDataReader reader);
 
         protected static bool HasColumn(IDataReader dr, string columnName)
         {
