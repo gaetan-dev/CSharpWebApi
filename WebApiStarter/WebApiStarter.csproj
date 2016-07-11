@@ -87,22 +87,27 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Commons\ExceptionLayer\MappingNotValidException.cs" />
+    <Compile Include="Commons\ExtensionMethods\DataReaderExtension.cs" />
+    <Compile Include="Commons\Tools.cs" />
     <Compile Include="Components\Example\Example.cs" />
     <Compile Include="Components\Example\ExampleController.cs" />
     <Compile Include="Components\Example\ExampleRepoDb.cs" />
+    <Compile Include="DataAccessLayer\DatabaseAccess.cs" />
+    <Compile Include="DataAccessLayer\DatabaseType.cs" />
     <Compile Include="DataAccessLayer\MySqlDatabaseAccess.cs" />
     <Compile Include="DataAccessLayer\SqlServerDatabaseAccess.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="ExceptionLayer\CustomExceptionService.cs" />
-    <Compile Include="ExceptionLayer\GlobalExceptionHandler.cs" />
-    <Compile Include="ExceptionLayer\ItemNotFoundException.cs" />
-    <Compile Include="ExceptionLayer\ModelNotValidException.cs" />
+    <Compile Include="Commons\ExceptionLayer\CustomExceptionService.cs" />
+    <Compile Include="Commons\ExceptionLayer\GlobalExceptionHandler.cs" />
+    <Compile Include="Commons\ExceptionLayer\ItemNotFoundException.cs" />
+    <Compile Include="Commons\ExceptionLayer\ModelNotValidException.cs" />
     <Compile Include="IController.cs" />
     <Compile Include="IRepoDb.cs" />
-    <Compile Include="LogLayer\UnhandledExceptionLogger.cs" />
-    <Compile Include="Model.cs" />
+    <Compile Include="Commons\LogLayer\UnhandledExceptionLogger.cs" />
+    <Compile Include="IModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

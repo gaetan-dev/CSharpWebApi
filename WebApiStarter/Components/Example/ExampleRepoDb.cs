@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
+using WebApiStarter.Commons.ExceptionLayer;
 using WebApiStarter.DataAccessLayer;
-using WebApiStarter.ExceptionLayer;
 
 namespace WebApiStarter.Components.Example
 {
@@ -46,7 +46,7 @@ namespace WebApiStarter.Components.Example
 
         public List<Example> CallDb(string storedProcedure, Dictionary<string, object> parameters)
         {
-            return MySqlDatabaseAccess<Example>.ExecuteStoredProcedure(storedProcedure, parameters);
+            return MySqlDatabaseAccess.GetInstance().ExecuteStoredProcedure<Example>(storedProcedure, parameters);
         }
     }
 }

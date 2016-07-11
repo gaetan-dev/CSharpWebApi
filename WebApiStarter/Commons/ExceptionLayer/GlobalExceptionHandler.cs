@@ -8,7 +8,7 @@ using System.Web.Http;
 using System.Web.Http.ExceptionHandling;
 using MySql.Data.MySqlClient;
 
-namespace WebApiStarter.ExceptionLayer
+namespace WebApiStarter.Commons.ExceptionLayer
 {
     public class GlobalExceptionHandler : ExceptionHandler
     {
@@ -44,6 +44,16 @@ namespace WebApiStarter.ExceptionLayer
 
                 context.Result = new SqlClientException(context.Request, result);
             }
+            else if (context.Exception is MappingNotValidException)
+            {
+                var result = new HttpResponseMessage(HttpStatusCode.InternalServerError)
+                {
+                    Content = new StringContent("MappingException"),
+                    ReasonPhrase = "MappingException"
+                };
+
+                context.Result = new MappingException(context.Request, result);
+            }
             else
             {
                 // Handle other exceptions, do other things
@@ -75,6 +85,24 @@ namespace WebApiStarter.ExceptionLayer
 
 
             public SqlClientException(HttpRequestMessage request, HttpResponseMessage httpResponseMessage)
+            {
+                _request = request;
+                _httpResponseMessage = httpResponseMessage;
+            }
+
+            public Task<HttpResponseMessage> ExecuteAsync(CancellationToken cancellationToken)
+            {
+                return Task.FromResult(_httpResponseMessage);
+            }
+        }
+
+        public class MappingException : IHttpActionResult
+        {
+            private HttpRequestMessage _request;
+            private HttpResponseMessage _httpResponseMessage;
+
+
+            public MappingException(HttpRequestMessage request, HttpResponseMessage httpResponseMessage)
             {
                 _request = request;
                 _httpResponseMessage = httpResponseMessage;

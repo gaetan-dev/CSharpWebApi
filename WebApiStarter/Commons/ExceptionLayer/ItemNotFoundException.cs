@@ -4,7 +4,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Filters;
 
-namespace WebApiStarter.ExceptionLayer
+namespace WebApiStarter.Commons.ExceptionLayer
 {
     public class ItemNotFoundException : Exception
     {

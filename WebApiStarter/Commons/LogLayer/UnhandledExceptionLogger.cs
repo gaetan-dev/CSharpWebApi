@@ -1,7 +1,7 @@
 ﻿using System.Web.Http.ExceptionHandling;
 using log4net;
 
-namespace WebApiStarter.LogLayer
+namespace WebApiStarter.Commons.LogLayer
 {
     public class UnhandledExceptionLogger : ExceptionLogger
     {

@@ -1,17 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
+using System.Data.Common;
 using MySql.Data.MySqlClient;
 
 namespace WebApiStarter.DataAccessLayer
 {
-    public class MySqlDatabaseAccess<T> where T : Model, new()
+    public class MySqlDatabaseAccess : DatabaseAccess
     {
-        public static List<T> ExecuteStoredProcedure(String storedProcedureName, Dictionary<string, object> parameters = null)
+        private static DatabaseAccess _instance;
+        public static DatabaseAccess GetInstance()
         {
-            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["mysqlConnection"].ConnectionString;
+            return _instance ?? (_instance = new MySqlDatabaseAccess());
+        }
 
-            using (MySqlConnection connection = new MySqlConnection(connectionString))
+        public override List<T> ExecuteStoredProcedure<T>(String storedProcedureName, Dictionary<string, object> parameters = null)
+        {
+            using (MySqlConnection connection = new MySqlConnection(ConfigurationManager.ConnectionStrings["mysqlConnection"].ConnectionString))
             {
                 MySqlCommand command = new MySqlCommand(storedProcedureName, connection)
                 {
@@ -30,15 +36,15 @@ namespace WebApiStarter.DataAccessLayer
 
                 connection.Open();
 
-                return ExecuteReader(command);
+                return ExecuteReader<T>(command);
             }
         }
 
-        private static List<T> ExecuteReader(MySqlCommand command)
+        protected override List<T> ExecuteReader<T>(DbCommand command)
         {
             List<T> results = new List<T>();
 
-            MySqlDataReader reader = command.ExecuteReader();
+            MySqlDataReader reader = ((MySqlCommand)command).ExecuteReader();
 
             while (reader.Read())
             {

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Web.Http;
-using WebApiStarter.ExceptionLayer;
+using WebApiStarter.Commons.ExceptionLayer;
 
 namespace WebApiStarter.Components.Example
 {

@@ -1,12 +1,11 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.Data;
+using WebApiStarter.Commons.ExtensionMethods;
 
 namespace WebApiStarter.Components.Example
 {
     public class Example : Model
     {
-        public int    Id   { get; set; }
         [Required]
         public string Prop1 { get; set; }
         [Required]
@@ -14,9 +13,9 @@ namespace WebApiStarter.Components.Example
 
         public override void Map(IDataReader reader)
         {
-            Id    = (HasColumn(reader, "Id"))    ? Convert.ToInt32(reader["Id"].ToString()) : Id;
-            Prop1 = (HasColumn(reader, "Prop1")) ? reader["Prop1"].ToString()               : Prop1;
-            Prop2 = (HasColumn(reader, "Prop2")) ? reader["Prop2"].ToString()               : Prop2;
+            Id    = reader.ParseField<int>("Id");
+            Prop1 = reader.ParseField<string>("Prop1");
+            Prop2 = reader.ParseField<string>("Prop2");
         }
     }
 }

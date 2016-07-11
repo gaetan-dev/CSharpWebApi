@@ -1,17 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
+using System.Data.Common;
 using System.Data.SqlClient;
 
 namespace WebApiStarter.DataAccessLayer
 {
-    public class SqlServerDatabaseAccess<T> where T : Model, new()
+    public class SqlServerDatabaseAccess : DatabaseAccess
     {
-        public static List<T> ExecuteStoredProcedure(String storedProcedureName, Dictionary<string, object> parameters = null)
+        private static DatabaseAccess _instance;
+        public static DatabaseAccess GetInstance()
         {
-            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["sqlserverConnection"].ConnectionString;
+            return _instance ?? (_instance = new SqlServerDatabaseAccess());
+        }
 
-            using (SqlConnection connection = new SqlConnection(connectionString))
+        public override List<T> ExecuteStoredProcedure<T>(String storedProcedureName, Dictionary<string, object> parameters = null)
+        {
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["sqlserverConnection"].ConnectionString))
             {
                 SqlCommand command = new SqlCommand(storedProcedureName, connection)
                 {
@@ -30,15 +36,15 @@ namespace WebApiStarter.DataAccessLayer
 
                 connection.Open();
 
-                return ExecuteReader(command);
+                return ExecuteReader<T>(command);
             }
         }
 
-        private static List<T> ExecuteReader(SqlCommand command)
+        protected override List<T> ExecuteReader<T>(DbCommand command)
         {
             List<T> results = new List<T>();
 
-            SqlDataReader reader = command.ExecuteReader();
+            SqlDataReader reader = ((SqlCommand)command).ExecuteReader();
 
             while (reader.Read())
             {
