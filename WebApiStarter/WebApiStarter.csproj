@@ -92,7 +92,8 @@
     <Compile Include="Commons\Tools.cs" />
     <Compile Include="Components\Example\Example.cs" />
     <Compile Include="Components\Example\ExampleController.cs" />
-    <Compile Include="Components\Example\ExampleRepoDb.cs" />
+    <Compile Include="Components\Example\ExampleService.cs" />
+    <Compile Include="Components\Example\IExampleService.cs" />
     <Compile Include="DataAccessLayer\DatabaseAccess.cs" />
     <Compile Include="DataAccessLayer\DatabaseType.cs" />
     <Compile Include="DataAccessLayer\MySqlDatabaseAccess.cs" />
@@ -107,7 +108,7 @@
     <Compile Include="IController.cs" />
     <Compile Include="IRepoDb.cs" />
     <Compile Include="Commons\LogLayer\UnhandledExceptionLogger.cs" />
-    <Compile Include="IModel.cs" />
+    <Compile Include="Model.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -6,18 +6,18 @@ namespace WebApiStarter.Components.Example
 {
     public class ExampleController : ApiController, IController<Example>
     {
-        private readonly IRepoDb<Example>_exampleRepoDb;
+        private readonly IService<Example>_exampleService;
 
         public ExampleController()
         {
-            _exampleRepoDb = new ExampleRepoDb();
+            _exampleService = new ExampleService();
         }
 
         [HttpGet]
         [Route("api/example/")]
         public IHttpActionResult GetAll()
         {
-            var result = _exampleRepoDb.GetAll();
+            var result = _exampleService.GetAll();
             return Ok(result);
         }
 
@@ -26,7 +26,7 @@ namespace WebApiStarter.Components.Example
         [ItemNotFoundExceptionFilter]
         public IHttpActionResult Get(int id)
         {
-            var result = _exampleRepoDb.Get(id);
+            var result = _exampleService.Get(id);
             return Ok(result);
         }
 
@@ -38,7 +38,7 @@ namespace WebApiStarter.Components.Example
             if (!ModelState.IsValid)
                 CustomExceptionService.ThrowModelNotValidException();
 
-            _exampleRepoDb.Set(example);
+            _exampleService.Set(example);
             return Ok();
         }
 
@@ -53,7 +53,7 @@ namespace WebApiStarter.Components.Example
         [Route("api/example/{id}")]
         public IHttpActionResult Delete(int id)
         {
-            _exampleRepoDb.Delete(id);
+            _exampleService.Delete(id);
             return Ok();
         }
     }
