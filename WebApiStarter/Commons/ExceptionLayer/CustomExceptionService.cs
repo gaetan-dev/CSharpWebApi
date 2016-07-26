@@ -8,9 +8,9 @@ namespace WebApiStarter.Commons.ExceptionLayer
             throw new ItemNotFoundException("Item not found");
         }
 
-        public static void ThrowModelNotValidException()
+        public static void ThrowModelNotValidException(string error)
         {
-            throw new ModelNotValidException("Model not valid");
+            throw new ModelNotValidException(string.Format("Model not valid: {0}", error));
         }
 
         public static void ThrowMappingNotValidException(string column)

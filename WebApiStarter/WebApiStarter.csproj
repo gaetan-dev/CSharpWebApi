@@ -112,10 +112,12 @@
   <ItemGroup>
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Commons\ExceptionLayer\MappingNotValidException.cs" />
+    <Compile Include="Commons\ExceptionLayer\Exceptions\MappingNotValidException.cs" />
     <Compile Include="Commons\ExtensionMethods\DataReaderExtension.cs" />
     <Compile Include="Commons\InjectionDependency\NinjectDependencyResolver.cs" />
     <Compile Include="Commons\InjectionDependency\NinjectDependencyScope.cs" />
+    <Compile Include="Commons\ModelValidation\ValidationActionFilter.cs" />
+    <Compile Include="Commons\ModelValidation\ValidationError.cs" />
     <Compile Include="Commons\Tools.cs" />
     <Compile Include="Components\Example\Example.cs" />
     <Compile Include="Components\Example\ExampleController.cs" />
@@ -130,8 +132,8 @@
     </Compile>
     <Compile Include="Commons\ExceptionLayer\CustomExceptionService.cs" />
     <Compile Include="Commons\ExceptionLayer\GlobalExceptionHandler.cs" />
-    <Compile Include="Commons\ExceptionLayer\ItemNotFoundException.cs" />
-    <Compile Include="Commons\ExceptionLayer\ModelNotValidException.cs" />
+    <Compile Include="Commons\ExceptionLayer\Exceptions\ItemNotFoundException.cs" />
+    <Compile Include="Commons\ExceptionLayer\Exceptions\ModelNotValidException.cs" />
     <Compile Include="IController.cs" />
     <Compile Include="IService.cs" />
     <Compile Include="Commons\LogLayer\UnhandledExceptionLogger.cs" />

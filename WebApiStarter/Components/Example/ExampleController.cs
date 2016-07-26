@@ -1,5 +1,6 @@
 ﻿using System.Web.Http;
 using WebApiStarter.Commons.ExceptionLayer;
+using WebApiStarter.Commons.ModelValidation;
 
 namespace WebApiStarter.Components.Example
 {
@@ -37,12 +38,9 @@ namespace WebApiStarter.Components.Example
 
         [HttpPost]
         [Route("api/example/")]
-        [ModelNotValidExceptionFilter]
+        [ValidationActionFilter]
         public IHttpActionResult Post(Example example)
         {
-            if (!ModelState.IsValid)
-                CustomExceptionService.ThrowModelNotValidException();
-
             _exampleService.Set(example);
             return Ok();
         }

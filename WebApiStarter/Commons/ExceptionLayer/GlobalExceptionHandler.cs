@@ -54,6 +54,16 @@ namespace WebApiStarter.Commons.ExceptionLayer
 
                 context.Result = new MappingException(context.Request, result);
             }
+            else if (context.Exception is ModelNotValidException)
+            {
+                var result = new HttpResponseMessage(HttpStatusCode.BadRequest)
+                {
+                    Content = new StringContent("ModelNotValidException"),
+                    ReasonPhrase = "ModelNotValidException"
+                };
+
+                context.Result = new MappingException(context.Request, result);
+            }
             else
             {
                 // Handle other exceptions, do other things

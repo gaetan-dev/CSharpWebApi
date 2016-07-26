@@ -437,7 +437,7 @@ private static IKernel CreateKernel()
     }
 }
 
- private static void RegisterServices(IKernel kernel)
+private static void RegisterServices(IKernel kernel)
 {
     // This is where we tell Ninject how to resolve service requests
     kernel.Bind<IExampleService>().To<ExampleService>();
