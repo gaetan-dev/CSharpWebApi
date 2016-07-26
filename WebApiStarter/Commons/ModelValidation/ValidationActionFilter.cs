@@ -21,6 +21,6 @@ namespace WebApiStarter.Commons.ModelValidation
 
                 CustomExceptionService.ThrowModelNotValidException(string.Join(",", errors));
             }
-        }
+        }
     }
 }

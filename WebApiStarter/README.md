@@ -443,3 +443,55 @@ private static void RegisterServices(IKernel kernel)
     kernel.Bind<IExampleService>().To<ExampleService>();
 }  
 ```
+
+## Model Validation
+Model Validation Error Message doesn't work with JsonFormatter.
+
+* Create ValidationActionFilter.cs
+
+```csharp
+public class ValidationActionFilter : ActionFilterAttribute
+{
+    public override void OnActionExecuting(HttpActionContext actionContext)
+    {
+        if (!actionContext.ModelState.IsValid)
+        {
+            var errors = actionContext.ModelState
+                .Where(e => e.Value.Errors.Count > 0)
+                .Select(e => new ValidationError
+                {
+                    Name = e.Key,
+                    Message = e.Value.Errors.First().Exception.ToString()
+                }.ToString()).ToArray();
+
+            CustomExceptionService.ThrowModelNotValidException(string.Join(",", errors));
+        }
+    }
+} 
+```
+
+* Create ValidationError.cs
+
+```csharp
+public class ValidationError
+{
+    public string Name { get; set; }
+    public string Message { get; set; }
+
+    public override string ToString()
+    {
+        return (string.Format("{0} -{1}", Name, Message.Split(':')[1].Split('.')[0]));
+    }
+}
+```
+
+* In ExampleController.cs
+
+```csharp
+[ValidationActionFilter]
+public IHttpActionResult Post(Example example)
+{
+    _exampleService.Set(example);
+    return Ok();
+}
+``` 
