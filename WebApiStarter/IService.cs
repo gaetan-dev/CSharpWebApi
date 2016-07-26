@@ -2,7 +2,7 @@
 
 namespace WebApiStarter
 {
-    internal interface IService<T>
+    public interface IService<T>
     {
         List<T> GetAll();
 

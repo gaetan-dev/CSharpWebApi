@@ -1,16 +1,21 @@
-﻿using System;
-using System.Web.Http;
+﻿using System.Web.Http;
 using WebApiStarter.Commons.ExceptionLayer;
 
 namespace WebApiStarter.Components.Example
 {
     public class ExampleController : ApiController, IController<Example>
     {
-        private readonly IService<Example>_exampleService;
+        private readonly IExampleService _exampleService;
 
         public ExampleController()
         {
             _exampleService = new ExampleService();
+        }
+
+        // Required for Ninject
+        public ExampleController(IExampleService service)
+        {
+            _exampleService = service;
         }
 
         [HttpGet]

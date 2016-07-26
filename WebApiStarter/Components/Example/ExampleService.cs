@@ -4,7 +4,7 @@ using WebApiStarter.DataAccessLayer;
 
 namespace WebApiStarter.Components.Example
 {
-    public class ExampleService : IService<Example>
+    public class ExampleService : IExampleService
     {
         public List<Example> GetAll()
         {

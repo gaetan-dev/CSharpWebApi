@@ -43,9 +43,29 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="MySql.Data, Version=6.9.5.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Program Files (x86)\MySQL\Connector.NET 6.9\Assemblies\v4.5\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.3.2.0.0\lib\net45-full\Ninject.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Ninject.Web.Common, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.Web.Common.3.2.0.0\lib\net45-full\Ninject.Web.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Ninject.Web.WebApi, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.Web.WebApi.3.2.4.0\lib\net45-full\Ninject.Web.WebApi.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Ninject.Web.WebApi.WebHost, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.Web.WebApi.WebHost.3.2.4.0\lib\net45-full\Ninject.Web.WebApi.WebHost.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Web.DynamicData" />
@@ -64,6 +84,10 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
+    <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebActivatorEx.2.0\lib\net40\WebActivatorEx.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json">
@@ -86,16 +110,19 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Commons\ExceptionLayer\MappingNotValidException.cs" />
     <Compile Include="Commons\ExtensionMethods\DataReaderExtension.cs" />
+    <Compile Include="Commons\InjectionDependency\NinjectDependencyResolver.cs" />
+    <Compile Include="Commons\InjectionDependency\NinjectDependencyScope.cs" />
     <Compile Include="Commons\Tools.cs" />
     <Compile Include="Components\Example\Example.cs" />
     <Compile Include="Components\Example\ExampleController.cs" />
     <Compile Include="Components\Example\ExampleService.cs" />
     <Compile Include="Components\Example\IExampleService.cs" />
+    <Compile Include="Components\Example\MockExampleService.cs" />
     <Compile Include="DataAccessLayer\DatabaseAccess.cs" />
-    <Compile Include="DataAccessLayer\DatabaseType.cs" />
     <Compile Include="DataAccessLayer\MySqlDatabaseAccess.cs" />
     <Compile Include="DataAccessLayer\SqlServerDatabaseAccess.cs" />
     <Compile Include="Global.asax.cs">
@@ -106,9 +133,9 @@
     <Compile Include="Commons\ExceptionLayer\ItemNotFoundException.cs" />
     <Compile Include="Commons\ExceptionLayer\ModelNotValidException.cs" />
     <Compile Include="IController.cs" />
-    <Compile Include="IRepoDb.cs" />
+    <Compile Include="IService.cs" />
     <Compile Include="Commons\LogLayer\UnhandledExceptionLogger.cs" />
-    <Compile Include="Model.cs" />
+    <Compile Include="IModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

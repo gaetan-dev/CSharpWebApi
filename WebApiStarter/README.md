@@ -268,3 +268,178 @@ public class UnhandledExceptionLogger : ExceptionLogger
     }
 }
 ```
+
+## [Injection Dependency](http://bitoftech.net/2013/11/09/implementing-dependency-injection-using-ninject/)
+* Create IExampleService.cs
+
+```csharp
+public interface IExampleService.cs
+{
+    void List<Example> getAll();
+}
+```
+
+* In ExampleService.cs
+
+```csharp
+public class ExampleService : IExampleService
+{
+    public List<Example> GetAll()
+    {
+        List<Example> result = CallDb("PS_GetAllExamples", null);
+        return result;
+    }
+}
+```
+
+* In MockExampleService.cs
+
+```csharp
+public class MockExampleService : IExampleService
+{
+    public List<Example> GetAll()
+    {
+        return new List<Example>
+        {
+            new Example()
+            {
+                Id = -1,
+                Prop1 = "Mock01",
+                Prop2 = "Mock02",
+            },
+                new Example()
+            {
+                Id = -2,
+                Prop1 = "Mock11",
+                Prop2 = "Mock12",
+            }
+        };
+    }
+}
+```
+
+* In ExampleController.cs
+
+```csharp
+public class ExampleController : ApiController, IController<Example>
+{
+    private readonly IExampleService _exampleService;
+
+    public ExampleController()
+    {
+        _exampleService = new ExampleService();
+    }
+
+	// Required for Ninject
+    public ExampleController(IExampleService service)
+    {
+        _exampleService = service;
+    }
+
+    [HttpGet]
+    [Route("api/example/")]
+    public IHttpActionResult GetAll()
+    {
+        var result = _exampleService.GetAll();
+        return Ok(result);
+    }
+}
+```
+
+### [Ninject](http://www.peterprovost.org/blog/2012/06/19/adding-ninject-to-web-api)
+```
+PM> Install-Package Ninject.Web.WebApi
+PM> Install-Package Ninject.Web.WebApi.WebHost
+```
+
+* Create NinjectDependencyScope.cs
+
+```csharp
+// Provides a Ninject implementation of IDependencyScope
+// which resolves services using the Ninject container.
+public class NinjectDependencyScope : IDependencyScope
+{
+    protected IResolutionRoot Resolver;
+
+    public NinjectDependencyScope(IResolutionRoot resolver)
+    {
+        Resolver = resolver;
+    }
+
+    public object GetService(Type serviceType)
+    {
+        if (Resolver == null)
+            throw new ObjectDisposedException("this", "This scope has been disposed");
+
+        return Resolver.TryGet(serviceType);
+    }
+
+    public IEnumerable<object> GetServices(Type serviceType)
+    {
+        if (Resolver == null)
+            throw new ObjectDisposedException("this", "This scope has been disposed");
+
+        return Resolver.GetAll(serviceType);
+    }
+
+    public void Dispose()
+    {
+        IDisposable disposable = Resolver as IDisposable;
+        if (disposable != null)
+            disposable.Dispose();
+
+        Resolver = null;
+    }
+}
+```
+
+* Create NinjectDependencyResolver.cs
+
+```csharp
+// This class is the _resolver, but it is also the global scope
+// so we derive from NinjectScope.
+public class NinjectDependencyResolver : NinjectDependencyScope, IDependencyResolver
+{
+    private readonly IKernel _kernel;
+
+    public NinjectDependencyResolver(IKernel kernel) : base(kernel)
+    {
+        _kernel = kernel;
+    }
+
+    public IDependencyScope BeginScope()
+    {
+        return new NinjectDependencyScope(_kernel.BeginBlock());
+    }
+}
+```
+
+* In App_Start.NinjectWebCommon.cs
+
+```csharp
+private static IKernel CreateKernel()
+{
+    var kernel = new StandardKernel();
+    try
+    {
+        kernel.Bind<Func<IKernel>>().ToMethod(ctx => () => new Bootstrapper().Kernel);
+        kernel.Bind<IHttpModule>().To<HttpApplicationInitializationHttpModule>();
+
+		// Add this
+        RegisterServices(kernel);
+
+        return kernel;
+    }
+    catch
+    {
+        kernel.Dispose();
+        throw;
+    }
+}
+
+ private static void RegisterServices(IKernel kernel)
+{
+    // This is where we tell Ninject how to resolve service requests
+    kernel.Bind<IExampleService>().To<ExampleService>();
+}  
+```
