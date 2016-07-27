@@ -495,3 +495,16 @@ public IHttpActionResult Post(Example example)
     return Ok();
 }
 ``` 
+
+## [Cache & ETag](http://bitoftech.net/2014/02/08/asp-net-web-api-resource-caching-etag-cachecow/)
+### CacheCow
+```
+PM> Install-Package CacheCow.Server
+```
+
+* In WebApiConfig.cs
+
+```csharp
+// Configure HTTP Caching using Entity Tags (ETags)
+config.MessageHandlers.Add(new CachingHandler(GlobalConfiguration.Configuration));
+```

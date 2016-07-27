@@ -1,6 +1,7 @@
 ﻿using System.Net.Http.Headers;
 using System.Web.Http;
 using System.Web.Http.ExceptionHandling;
+using CacheCow.Server;
 using WebApiStarter.Commons.ExceptionLayer;
 using WebApiStarter.Commons.LogLayer;
 
@@ -30,6 +31,9 @@ namespace WebApiStarter
 
             // Log4net
             log4net.Config.XmlConfigurator.Configure();
+
+            // Configure HTTP Caching using Entity Tags (ETags)
+            config.MessageHandlers.Add(new CachingHandler(GlobalConfiguration.Configuration));
         }
     }
 }
