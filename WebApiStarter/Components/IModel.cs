@@ -1,6 +1,6 @@
 ﻿using System.Data;
 
-namespace WebApiStarter
+namespace WebApiStarter.Components
 {
     public interface IModel
     {

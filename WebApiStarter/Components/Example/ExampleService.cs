@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using WebApiStarter.Commons.ExceptionLayer;
 using WebApiStarter.DataAccessLayer;
 
@@ -21,8 +22,8 @@ namespace WebApiStarter.Components.Example
             if (results == null || results.Count == 0 || results[0].Id == -1)
                 CustomExceptionService.ThrowItemNotFoundException();
 
-            // ReSharper disable once PossibleNullReferenceException
-            return results[0];
+            // ReSharper disable once AssignNullToNotNullAttribute
+            return results.First();
         }
 
         public void Set(Example model)

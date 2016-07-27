@@ -1,6 +1,6 @@
 ﻿using System.Web.Http;
 
-namespace WebApiStarter
+namespace WebApiStarter.Components
 {
     internal interface IController<in T>
     {

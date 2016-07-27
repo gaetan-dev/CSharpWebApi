@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace WebApiStarter
+namespace WebApiStarter.Components
 {
     public interface IService<T>
     {

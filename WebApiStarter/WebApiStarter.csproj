@@ -142,10 +142,10 @@
     <Compile Include="Commons\ExceptionLayer\GlobalExceptionHandler.cs" />
     <Compile Include="Commons\ExceptionLayer\Exceptions\ItemNotFoundException.cs" />
     <Compile Include="Commons\ExceptionLayer\Exceptions\ModelNotValidException.cs" />
-    <Compile Include="IController.cs" />
-    <Compile Include="IService.cs" />
+    <Compile Include="Components\IController.cs" />
+    <Compile Include="Components\IService.cs" />
     <Compile Include="Commons\LogLayer\UnhandledExceptionLogger.cs" />
-    <Compile Include="IModel.cs" />
+    <Compile Include="Components\IModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
