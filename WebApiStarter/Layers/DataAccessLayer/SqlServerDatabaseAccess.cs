@@ -6,7 +6,7 @@ using System.Data.Common;
 using System.Data.SqlClient;
 using WebApiStarter.Components;
 
-namespace WebApiStarter.DataAccessLayer
+namespace WebApiStarter.Layers.DataAccessLayer
 {
     public class SqlServerDatabaseAccess : IDatabaseAccess
     {

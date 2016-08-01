@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Data;
-using WebApiStarter.Commons.ExceptionLayer;
+using WebApiStarter.Layers.ExceptionLayer;
 
 namespace WebApiStarter.Commons.ExtensionMethods
 {

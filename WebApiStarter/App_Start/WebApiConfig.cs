@@ -1,10 +1,9 @@
 ﻿using System.Net.Http.Headers;
-using System.Web.Hosting;
 using System.Web.Http;
 using System.Web.Http.ExceptionHandling;
 using CacheCow.Server;
-using WebApiStarter.Commons.ExceptionLayer;
-using WebApiStarter.Commons.LogLayer;
+using WebApiStarter.Layers.LogLayer;
+using WebApiStarter.Layers.ExceptionLayer;
 
 namespace WebApiStarter
 {

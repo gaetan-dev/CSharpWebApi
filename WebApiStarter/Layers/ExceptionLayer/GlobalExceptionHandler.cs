@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.ExceptionHandling;
 using MySql.Data.MySqlClient;
+using WebApiStarter.Layers.ExceptionLayer.Exceptions;
 
-namespace WebApiStarter.Commons.ExceptionLayer
+namespace WebApiStarter.Layers.ExceptionLayer
 {
     public class GlobalExceptionHandler : ExceptionHandler
     {

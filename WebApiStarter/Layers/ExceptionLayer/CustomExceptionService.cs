@@ -1,5 +1,6 @@
-﻿
-namespace WebApiStarter.Commons.ExceptionLayer
+using WebApiStarter.Layers.ExceptionLayer.Exceptions;
+
+namespace WebApiStarter.Layers.ExceptionLayer
 {
     public static class CustomExceptionService
     {

@@ -120,7 +120,7 @@
   <ItemGroup>
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Commons\ExceptionLayer\Exceptions\MappingNotValidException.cs" />
+    <Compile Include="Layers\ExceptionLayer\Exceptions\MappingNotValidException.cs" />
     <Compile Include="Commons\ExtensionMethods\DataReaderExtension.cs" />
     <Compile Include="Commons\InjectionDependency\NinjectDependencyResolver.cs" />
     <Compile Include="Commons\InjectionDependency\NinjectDependencyScope.cs" />
@@ -132,19 +132,19 @@
     <Compile Include="Components\Example\ExampleService.cs" />
     <Compile Include="Components\Example\IExampleService.cs" />
     <Compile Include="Components\Example\MockExampleService.cs" />
-    <Compile Include="DataAccessLayer\IDatabaseAccess.cs" />
-    <Compile Include="DataAccessLayer\MySqlDatabaseAccess.cs" />
-    <Compile Include="DataAccessLayer\SqlServerDatabaseAccess.cs" />
+    <Compile Include="Layers\DataAccessLayer\IDatabaseAccess.cs" />
+    <Compile Include="Layers\DataAccessLayer\MySqlDatabaseAccess.cs" />
+    <Compile Include="Layers\DataAccessLayer\SqlServerDatabaseAccess.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Commons\ExceptionLayer\CustomExceptionService.cs" />
-    <Compile Include="Commons\ExceptionLayer\GlobalExceptionHandler.cs" />
-    <Compile Include="Commons\ExceptionLayer\Exceptions\ItemNotFoundException.cs" />
-    <Compile Include="Commons\ExceptionLayer\Exceptions\ModelNotValidException.cs" />
+    <Compile Include="Layers\ExceptionLayer\CustomExceptionService.cs" />
+    <Compile Include="Layers\ExceptionLayer\GlobalExceptionHandler.cs" />
+    <Compile Include="Layers\ExceptionLayer\Exceptions\ItemNotFoundException.cs" />
+    <Compile Include="Layers\ExceptionLayer\Exceptions\ModelNotValidException.cs" />
     <Compile Include="Components\IController.cs" />
     <Compile Include="Components\IService.cs" />
-    <Compile Include="Commons\LogLayer\UnhandledExceptionLogger.cs" />
+    <Compile Include="Layers\LogLayer\UnhandledExceptionLogger.cs" />
     <Compile Include="Components\IModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

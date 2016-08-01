@@ -4,7 +4,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Filters;
 
-namespace WebApiStarter.Commons.ExceptionLayer
+namespace WebApiStarter.Layers.ExceptionLayer.Exceptions
 {
     public class ModelNotValidException : Exception
     {

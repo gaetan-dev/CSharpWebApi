@@ -4,7 +4,7 @@ using System.Data;
 using MySql.Data.MySqlClient;
 using WebApiStarter.Components;
 
-namespace WebApiStarter.DataAccessLayer
+namespace WebApiStarter.Layers.DataAccessLayer
 {
     public class MySqlDatabaseAccess : IDatabaseAccess
     {

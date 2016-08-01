@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using WebApiStarter.Components;
 
-namespace WebApiStarter.DataAccessLayer
+namespace WebApiStarter.Layers.DataAccessLayer
 {
     public interface IDatabaseAccess
     {

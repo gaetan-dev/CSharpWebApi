@@ -1,6 +1,6 @@
 ﻿using System.Web.Http;
-using WebApiStarter.Commons.ExceptionLayer;
 using WebApiStarter.Commons.ModelValidation;
+using WebApiStarter.Layers.ExceptionLayer.Exceptions;
 
 namespace WebApiStarter.Components.Example
 {

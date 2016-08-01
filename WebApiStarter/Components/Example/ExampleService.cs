@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using WebApiStarter.Commons.ExceptionLayer;
-using WebApiStarter.DataAccessLayer;
+using WebApiStarter.Layers.DataAccessLayer;
+using WebApiStarter.Layers.ExceptionLayer;
 
 namespace WebApiStarter.Components.Example
 {

@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
-using WebApiStarter.Commons.ExceptionLayer;
+using WebApiStarter.Layers.ExceptionLayer;
 
 namespace WebApiStarter.Commons.ModelValidation
 {

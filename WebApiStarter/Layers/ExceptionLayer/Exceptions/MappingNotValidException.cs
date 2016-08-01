@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace WebApiStarter.Commons.ExceptionLayer
+namespace WebApiStarter.Layers.ExceptionLayer.Exceptions
 {
     public class MappingNotValidException : Exception
     {
