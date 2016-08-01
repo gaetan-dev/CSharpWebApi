@@ -4,10 +4,11 @@ using WebApiStarter.Commons.ModelValidation;
 
 namespace WebApiStarter.Components.Example
 {
-    public class ExampleController : ApiController, IController<Example>
+    public class ExampleController : ApiController, IController<ExampleModel>
     {
         private readonly IExampleService _exampleService;
 
+        // Required for Acceptance Tests
         public ExampleController()
         {
             _exampleService = new ExampleService();
@@ -23,38 +24,41 @@ namespace WebApiStarter.Components.Example
         [Route("api/example/")]
         public IHttpActionResult GetAll()
         {
-            var result = _exampleService.GetAll();
+            var result = _exampleService.ReadAll();
             return Ok(result);
         }
 
         [HttpGet]
         [Route("api/example/{id}")]
         [ItemNotFoundExceptionFilter]
-        public IHttpActionResult Get(int id)
+        public IHttpActionResult Get(string id)
         {
-            var result = _exampleService.Get(id);
+            var result = _exampleService.Read(id);
             return Ok(result);
         }
 
         [HttpPost]
         [Route("api/example/")]
         [ValidationActionFilter]
-        public IHttpActionResult Post(Example example)
+        public IHttpActionResult Post(ExampleModel example)
         {
-            _exampleService.Set(example);
-            return Ok();
+            example = _exampleService.Create(example);
+
+            string location = Request.RequestUri + example.Id;
+            return Created(location, example);
         }
 
         [HttpPut]
         [Route("api/example/")]
-        public IHttpActionResult Put(Example model)
+        public IHttpActionResult Put(ExampleModel example)
         {
-            return Post(model);
+            example = _exampleService.Update(example);
+            return Ok(example);
         }
 
         [HttpDelete]
         [Route("api/example/{id}")]
-        public IHttpActionResult Delete(int id)
+        public IHttpActionResult Delete(string id)
         {
             _exampleService.Delete(id);
             return Ok();

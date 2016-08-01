@@ -5,23 +5,23 @@ TRUNCATE `example`;
 SET FOREIGN_KEY_CHECKS = 1;
 
 -- -------------------------------------------------------
--- 						PS_SetExample
+-- 						PS_CreateExample
 -- -------------------------------------------------------
 
-CALL PS_SetExample 
+CALL PS_CreateExample 
 (
-null,
+'1',
 'Prop01',
 'Prop02')
 ;
 
 -- -------------------------------------------------------
--- 						PS_SetExample
+-- 						PS_PostExample
 -- -------------------------------------------------------
 
-CALL PS_SetExample 
+CALL PS_CreateExample 
 (
-null,
+'2',
 'Prop11',
 'Prop12')
 ;

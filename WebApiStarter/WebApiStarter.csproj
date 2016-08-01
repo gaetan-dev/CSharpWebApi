@@ -127,12 +127,12 @@
     <Compile Include="Commons\ModelValidation\ValidationActionFilter.cs" />
     <Compile Include="Commons\ModelValidation\ValidationError.cs" />
     <Compile Include="Commons\Tools.cs" />
-    <Compile Include="Components\Example\Example.cs" />
+    <Compile Include="Components\Example\ExampleModel.cs" />
     <Compile Include="Components\Example\ExampleController.cs" />
     <Compile Include="Components\Example\ExampleService.cs" />
     <Compile Include="Components\Example\IExampleService.cs" />
     <Compile Include="Components\Example\MockExampleService.cs" />
-    <Compile Include="DataAccessLayer\DatabaseAccess.cs" />
+    <Compile Include="DataAccessLayer\IDatabaseAccess.cs" />
     <Compile Include="DataAccessLayer\MySqlDatabaseAccess.cs" />
     <Compile Include="DataAccessLayer\SqlServerDatabaseAccess.cs" />
     <Compile Include="Global.asax.cs">
@@ -150,7 +150,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
-    <Content Include="README.md" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -1,6 +1,7 @@
 using System.Web.Http;
 using Ninject.Web.WebApi;
 using WebApiStarter.Components.Example;
+using WebApiStarter.DataAccessLayer;
 
 [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(WebApiStarter.App_Start.NinjectWebCommon), "Start")]
 [assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(WebApiStarter.App_Start.NinjectWebCommon), "Stop")]
@@ -67,6 +68,7 @@ namespace WebApiStarter.App_Start
         private static void RegisterServices(IKernel kernel)
         {
             // This is where we tell Ninject how to resolve service requests
+            kernel.Bind<IDatabaseAccess>().To<MySqlDatabaseAccess>();
             kernel.Bind<IExampleService>().To<ExampleService>();
         }        
     }

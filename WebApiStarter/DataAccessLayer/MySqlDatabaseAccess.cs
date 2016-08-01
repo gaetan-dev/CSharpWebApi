@@ -1,50 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
-using System.Data.Common;
 using MySql.Data.MySqlClient;
+using WebApiStarter.Components;
 
 namespace WebApiStarter.DataAccessLayer
 {
-    public class MySqlDatabaseAccess : DatabaseAccess
+    public class MySqlDatabaseAccess : IDatabaseAccess
     {
-        private static DatabaseAccess _instance;
-        public static DatabaseAccess GetInstance()
-        {
-            return _instance ?? (_instance = new MySqlDatabaseAccess());
-        }
+        private MySqlConnection _connection;
+        private MySqlCommand    _command;
 
-        public override List<T> ExecuteStoredProcedure<T>(String storedProcedureName, Dictionary<string, object> parameters = null)
+        public List<T> ExecuteStoredProcedure<T>(string storedProcedureName, Dictionary<string, object> parameters = null) where T : IModel, new()
         {
-            using (MySqlConnection connection = new MySqlConnection(ConfigurationManager.ConnectionStrings["mysqlConnection"].ConnectionString))
+            using (_connection = new MySqlConnection(ConfigurationManager.ConnectionStrings["mysqlConnection"].ConnectionString))
             {
-                MySqlCommand command = new MySqlCommand(storedProcedureName, connection)
-                {
-                    CommandType = CommandType.StoredProcedure,
-                    CommandText = storedProcedureName,
-                    Connection = connection
-                };
+                SetupCommand(storedProcedureName, parameters);
 
-                if (parameters != null)
-                {
-                    foreach (var key in parameters.Keys)
-                    {
-                        command.Parameters.AddWithValue(key, parameters[key]);
-                    }
-                }
+                _connection.Open();
 
-                connection.Open();
-
-                return ExecuteReader<T>(command);
+                return ExecuteReader<T>();
             }
         }
 
-        protected override List<T> ExecuteReader<T>(DbCommand command)
+        private List<T> ExecuteReader<T>() where T : IModel, new()
         {
             List<T> results = new List<T>();
 
-            MySqlDataReader reader = ((MySqlCommand)command).ExecuteReader();
+            MySqlDataReader reader = _command.ExecuteReader();
 
             while (reader.Read())
             {
@@ -55,6 +38,24 @@ namespace WebApiStarter.DataAccessLayer
 
             reader.Close();
             return results;
+        }
+
+        private void SetupCommand(string storedProcedureName, Dictionary<string, object> parameters = null)
+        {
+            _command = new MySqlCommand(storedProcedureName, _connection)
+            {
+                CommandType = CommandType.StoredProcedure,
+                CommandText = storedProcedureName,
+                Connection = _connection
+            };
+
+            if (parameters != null)
+            {
+                foreach (var key in parameters.Keys)
+                {
+                    _command.Parameters.AddWithValue(key, parameters[key]);
+                }
+            }
         }
     }
 }

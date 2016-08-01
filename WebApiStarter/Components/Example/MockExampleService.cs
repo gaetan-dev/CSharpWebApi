@@ -5,41 +5,46 @@ namespace WebApiStarter.Components.Example
 {
     public class MockExampleService : IExampleService
     {
-        public List<Example> GetAll()
+        public List<ExampleModel> ReadAll()
         {
-            return new List<Example>
+            return new List<ExampleModel>
             {
-                new Example()
+                new ExampleModel
                 {
-                    Id = -1,
+                    Id = "-1",
                     Prop1 = "Mock01",
                     Prop2 = "Mock02",
                 },
-                 new Example()
+                 new ExampleModel
                 {
-                    Id = -2,
+                    Id = "-2",
                     Prop1 = "Mock11",
                     Prop2 = "Mock12",
                 }
             };
         }
 
-        public Example Get(int id)
+        public ExampleModel Read(string id)
         {
             throw new NotImplementedException();
         }
 
-        public void Set(Example model)
+        public ExampleModel Create(ExampleModel model)
         {
             throw new NotImplementedException();
         }
 
-        public void Delete(int id)
+        public ExampleModel Update(ExampleModel model)
         {
             throw new NotImplementedException();
         }
 
-        public List<Example> CallDb(string storedProcedure, Dictionary<string, object> parameters)
+        public void Delete(string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<ExampleModel> CallDb(string storedProcedure, Dictionary<string, object> parameters)
         {
             throw new NotImplementedException();
         }
