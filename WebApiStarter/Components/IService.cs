@@ -4,13 +4,15 @@ namespace WebApiStarter.Components
 {
     public interface IService<T>
     {
-        List<T> GetAll();
+        List<T> ReadAll();
 
-        T Get(int id);
+        T Read(string id);
 
-        void Set(T model);
+        T Create(T model);
 
-        void Delete(int id);
+        T Update(T model);
+
+        void Delete(string id);
 
         List<T> CallDb(string storedProcedure, Dictionary<string, object> parameters);
     }

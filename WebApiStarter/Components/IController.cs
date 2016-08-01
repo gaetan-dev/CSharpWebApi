@@ -2,12 +2,12 @@
 
 namespace WebApiStarter.Components
 {
-    internal interface IController<in T>
+    public interface IController<in T>
     {
         IHttpActionResult GetAll();
-        IHttpActionResult Get(int id);
+        IHttpActionResult Get(string id);
         IHttpActionResult Post(T model);
         IHttpActionResult Put(T model);
-        IHttpActionResult Delete(int id);
+        IHttpActionResult Delete(string id);
     }
 }

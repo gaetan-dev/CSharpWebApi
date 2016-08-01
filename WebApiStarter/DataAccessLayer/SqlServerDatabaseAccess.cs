@@ -4,18 +4,19 @@ using System.Configuration;
 using System.Data;
 using System.Data.Common;
 using System.Data.SqlClient;
+using WebApiStarter.Components;
 
 namespace WebApiStarter.DataAccessLayer
 {
-    public class SqlServerDatabaseAccess : DatabaseAccess
+    public class SqlServerDatabaseAccess : IDatabaseAccess
     {
-        private static DatabaseAccess _instance;
-        public static DatabaseAccess GetInstance()
+        private static IDatabaseAccess _instance;
+        public static IDatabaseAccess GetInstance()
         {
             return _instance ?? (_instance = new SqlServerDatabaseAccess());
         }
 
-        public override List<T> ExecuteStoredProcedure<T>(String storedProcedureName, Dictionary<string, object> parameters = null)
+        public List<T> ExecuteStoredProcedure<T>(String storedProcedureName, Dictionary<string, object> parameters = null) where T : IModel, new()
         {
             using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["sqlserverConnection"].ConnectionString))
             {
@@ -40,7 +41,7 @@ namespace WebApiStarter.DataAccessLayer
             }
         }
 
-        protected override List<T> ExecuteReader<T>(DbCommand command)
+        public List<T> ExecuteReader<T>(DbCommand command) where T : IModel, new()
         {
             List<T> results = new List<T>();
 

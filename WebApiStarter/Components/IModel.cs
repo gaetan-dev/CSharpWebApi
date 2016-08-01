@@ -4,7 +4,7 @@ namespace WebApiStarter.Components
 {
     public interface IModel
     {
-        int Id { get; set; }
+        string Id { get; set; }
 
         void Map(IDataReader reader);
     }

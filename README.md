@@ -508,3 +508,155 @@ PM> Install-Package CacheCow.Server
 // Configure HTTP Caching using Entity Tags (ETags)
 config.MessageHandlers.Add(new CachingHandler(GlobalConfiguration.Configuration));
 ```
+
+## Tests
+### Behaviour Driven Development
+#### [Specflow](http://www.specflow.org/getting-started/)
+* In SpecFlowExample.feature (SpecFlow Feature File, see link's title "ADDING A FEATURE FILE")
+
+```
+Feature: Projects API
+	In order to perform CRUD operations on the projects
+	As a client of the Web Api
+	I want to be able to Create, Update, Delete, and List projects
+
+	@create
+	Scenario Outline: 01 Creating a new example
+		 Given a new example '<Id>', '<Prop1>', '<Prop2>'
+		 When a POST request is made
+		 Then a '201 Created' status is returned
+		 Then the example should be added
+		 Then the response location header will be set to the resource location
+	Examples:
+		| Id | Prop1 | Prop2 |
+		| T  | Spec01 | Spec02 |
+```
+
+* In CreatingExampleSteps.cs
+
+```csharp
+[Given(@"a new example '(.*)', '(.*)', '(.*)'")]
+public void GivenANewExample(string id, string p1, string p2)
+{
+    // Arrange
+    Example = new ExampleModel
+    {
+        Id    = id,
+        Prop1 = p1,
+        Prop2 = p2
+    };
+}
+
+[When(@"a POST request is made")]
+public void WhenAPostRequestIsMade()
+{
+    using (var client = CreateClient())
+    {
+        Response = client.PostAsJsonAsync(client.BaseAddress, Example).Result;
+    }
+
+    _result = Response.Content.ReadAsAsync<ExampleModel>().Result;
+}
+        
+[Then(@"a '201 Created' status is returned")]
+public void ThenAStatusIsReturned()
+{
+    // Assert
+    Assert.AreEqual(HttpStatusCode.Created, Response.StatusCode);
+}
+
+[Then(@"the example should be added")]
+public void ThenTheExampleShouldBeAdded()
+{
+    // Assert
+    Assert.AreEqual(Example, _result);
+}
+
+[Then(@"the response location header will be set to the resource location")]
+public void ThenTheResponseLocationHeaderWillBeSetToTheResourceLocation()
+{
+    // Assert
+    Assert.AreEqual(new Uri(Url + Example.Id), Response.Headers.Location);
+}
+```
+
+#### [Self-Hosting (OWIN)](http://johnatten.com/2015/01/11/asp-net-web-api-2-2-create-a-self-hosted-owin-based-web-api-from-scratch/)
+```
+PM> Install-Package Microsoft.AspNet.WebApi.OwinSelfHost -Pre
+PM> Install-Package Microsoft.AspNet.WebApi.Client -Pre
+```
+
+* Create Startup.cs
+
+```csharp
+class Startup
+{
+    // This method is required by Katana:
+    public void Configuration(IAppBuilder app)
+    {
+        var webApiConfiguration = ConfigureWebApi();
+
+        // Use the extension method provided by the WebApi.Owin library:
+        app.UseWebApi(webApiConfiguration);
+    }
+
+
+    private HttpConfiguration ConfigureWebApi()
+    {
+        var config = new HttpConfiguration();
+        config.Routes.MapHttpRoute(
+            "DefaultApi",
+            "api/{controller}/{id}",
+            new { id = RouteParameter.Optional }
+        );
+
+        return config;
+    }
+}
+```
+
+* Create ExampleSteps.cs
+
+```csharp
+public class ExampleSteps
+{
+    protected ExampleModel Example;
+
+    private static IDisposable _server;
+
+    protected const string Uri = "http://localhost:56127";
+    protected const string Url = Uri + "/api/example/";
+    protected HttpResponseMessage Response;
+
+    [BeforeFeature]
+    public static void CreateVirtualServer()
+    {
+        _server = WebApp.Start<Startup>(Uri);
+    }
+
+    [AfterFeature]
+    public static void DisposeVirtualServer()
+    {
+        _server.Dispose();
+    }
+
+    public HttpClient CreateClient()
+    {
+        var client = new HttpClient
+        {
+            BaseAddress = new Uri(Url)
+        };
+        return client;
+    }
+}
+```
+
+* In CreatingExampleSteps.cs
+
+```csharp
+[Binding]
+public class CreatingExampleSteps : ExampleSteps
+{
+	/* ... */
+}
+```
