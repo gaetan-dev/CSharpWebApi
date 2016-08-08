@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web.DynamicData;
+using CacheCow.Common.Helpers;
+using WebApiStarter.Commons.ExtensionMethods;
+using WebApiStarter.Components.Example.Model;
 using WebApiStarter.Layers.DataAccessLayer;
 using WebApiStarter.Layers.ExceptionLayer;
 
-namespace WebApiStarter.Components.Example
+namespace WebApiStarter.Components.Example.Service
 {
     public class ExampleService : IExampleService
     {
@@ -34,7 +38,7 @@ namespace WebApiStarter.Components.Example
 
             List<ExampleModel> results = CallDb("PS_ReadExampleById ", parameters);
 
-            if (results == null || results.Count == 0 || results[0].Id == null)
+            if (results.IsNullOrEmpty())
                 CustomExceptionService.ThrowItemNotFoundException();
 
             // ReSharper disable once AssignNullToNotNullAttribute

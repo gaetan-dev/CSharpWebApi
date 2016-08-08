@@ -4,6 +4,7 @@ using System.Net.Http;
 using NUnit.Framework;
 using TechTalk.SpecFlow;
 using WebApiStarter.Components.Example;
+using WebApiStarter.Components.Example.Model;
 
 namespace WebApiStarter.AcceptanceTests.Tests.Example
 {

@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using WebApiStarter.Components.Example.Model;
 
-namespace WebApiStarter.Components.Example
+namespace WebApiStarter.Components.Example.Service
 {
     public class MockExampleService : IExampleService
     {
@@ -26,7 +27,12 @@ namespace WebApiStarter.Components.Example
 
         public ExampleModel Read(string id)
         {
-            throw new NotImplementedException();
+            return new ExampleModel
+            {
+                Id = "-1",
+                Prop1 = "Mock01",
+                Prop2 = "Mock02",
+            };
         }
 
         public ExampleModel Create(ExampleModel model)

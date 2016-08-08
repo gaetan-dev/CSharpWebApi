@@ -3,6 +3,7 @@ using System.Configuration;
 using System.Data;
 using MySql.Data.MySqlClient;
 using WebApiStarter.Components;
+using WebApiStarter.Components.Example.Model;
 
 namespace WebApiStarter.Layers.DataAccessLayer
 {
@@ -27,13 +28,15 @@ namespace WebApiStarter.Layers.DataAccessLayer
         {
             List<T> results = new List<T>();
 
-            MySqlDataReader reader = _command.ExecuteReader();
+            IDataReader reader = _command.ExecuteReader();
+
+            ComponentFactory factory = new ExampleModelFactory();
 
             while (reader.Read())
             {
-                T model = new T();
-                model.Map(reader);
-                results.Add(model);
+                T model = (T) factory.CreateModel(reader);
+                if (!model.IsEmpty())
+                    results.Add(model);
             }
 
             reader.Close();

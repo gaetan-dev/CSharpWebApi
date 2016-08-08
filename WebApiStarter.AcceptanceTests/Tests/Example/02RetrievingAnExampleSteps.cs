@@ -3,18 +3,19 @@ using System.Net;
 using System.Net.Http;
 using NUnit.Framework;
 using TechTalk.SpecFlow;
+using WebApiStarter.Components.Example.Model;
 
 namespace WebApiStarter.AcceptanceTests.Tests.Example
 {
     [Binding]
     public class RetrievingAnExampleSteps : ExampleSteps
     {
-        private Components.Example.ExampleModel _expect;
+        private ExampleModel _expect;
 
         [Given(@"an existing example '(.*)', '(.*)', '(.*)'")]
         public void GivenAnExistingExample(string id, string p1, string p2)
         {
-            _expect = new Components.Example.ExampleModel
+            _expect = new ExampleModel
             {
                 Id = id,
                 Prop1 = p1,
@@ -30,7 +31,7 @@ namespace WebApiStarter.AcceptanceTests.Tests.Example
                 Response = client.GetAsync(new Uri(client.BaseAddress, _expect.Id)).Result;
             }
 
-            Example = Response.Content.ReadAsAsync<Components.Example.ExampleModel>().Result;
+            Example = Response.Content.ReadAsAsync<ExampleModel>().Result;
         }
 
         [Then(@"a '200 Ok' status is returned")]

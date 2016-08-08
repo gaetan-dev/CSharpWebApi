@@ -7,5 +7,7 @@ namespace WebApiStarter.Components
         string Id { get; set; }
 
         void Map(IDataReader reader);
+
+        bool IsEmpty();
     }
 }

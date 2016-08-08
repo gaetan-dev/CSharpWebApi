@@ -2,7 +2,7 @@
 using System.Data;
 using WebApiStarter.Commons.ExtensionMethods;
 
-namespace WebApiStarter.Components.Example
+namespace WebApiStarter.Components.Example.Model
 {
     public class ExampleModel : IModel
     {
@@ -11,12 +11,18 @@ namespace WebApiStarter.Components.Example
         public string Prop1 { get; set; }
         [Required]
         public string Prop2 { get; set; }
+        
 
         public void Map(IDataReader reader)
         {
             Id    = reader.ParseField<string>("Id");
             Prop1 = reader.ParseField<string>("Prop1");
             Prop2 = reader.ParseField<string>("Prop2");
+        }
+
+        public bool IsEmpty()
+        {
+            return string.IsNullOrEmpty(Id) && string.IsNullOrEmpty(Prop1) && string.IsNullOrEmpty(Prop2);
         }
 
         protected bool Equals(ExampleModel other)
@@ -28,7 +34,7 @@ namespace WebApiStarter.Components.Example
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != this.GetType()) return false;
+            if (obj.GetType() != GetType()) return false;
             return Equals((ExampleModel) obj);
         }
 

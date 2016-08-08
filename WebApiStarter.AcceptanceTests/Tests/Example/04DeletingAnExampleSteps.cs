@@ -4,6 +4,7 @@ using System.Net;
 using System.Net.Http;
 using NUnit.Framework;
 using TechTalk.SpecFlow;
+using WebApiStarter.Components.Example.Model;
 
 namespace WebApiStarter.AcceptanceTests.Tests.Example
 {
@@ -13,7 +14,7 @@ namespace WebApiStarter.AcceptanceTests.Tests.Example
         [Given(@"an existing example's id '(.*)'")]
         public void GivenAnExistingExampleId(string id)
         {
-            Example = new Components.Example.ExampleModel
+            Example = new ExampleModel
             {
                 Id = id
             };

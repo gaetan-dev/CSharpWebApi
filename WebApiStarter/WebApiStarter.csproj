@@ -120,6 +120,9 @@
   <ItemGroup>
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Commons\ExtensionMethods\EnumerableExtension.cs" />
+    <Compile Include="Components\Example\Model\ExampleModelFactory.cs" />
+    <Compile Include="Components\ComponentFactory.cs" />
     <Compile Include="Layers\ExceptionLayer\Exceptions\MappingNotValidException.cs" />
     <Compile Include="Commons\ExtensionMethods\DataReaderExtension.cs" />
     <Compile Include="Commons\InjectionDependency\NinjectDependencyResolver.cs" />
@@ -127,11 +130,11 @@
     <Compile Include="Commons\ModelValidation\ValidationActionFilter.cs" />
     <Compile Include="Commons\ModelValidation\ValidationError.cs" />
     <Compile Include="Commons\Tools.cs" />
-    <Compile Include="Components\Example\ExampleModel.cs" />
+    <Compile Include="Components\Example\Model\ExampleModel.cs" />
     <Compile Include="Components\Example\ExampleController.cs" />
-    <Compile Include="Components\Example\ExampleService.cs" />
-    <Compile Include="Components\Example\IExampleService.cs" />
-    <Compile Include="Components\Example\MockExampleService.cs" />
+    <Compile Include="Components\Example\Service\ExampleService.cs" />
+    <Compile Include="Components\Example\Service\IExampleService.cs" />
+    <Compile Include="Components\Example\Service\MockExampleService.cs" />
     <Compile Include="Layers\DataAccessLayer\IDatabaseAccess.cs" />
     <Compile Include="Layers\DataAccessLayer\MySqlDatabaseAccess.cs" />
     <Compile Include="Layers\DataAccessLayer\SqlServerDatabaseAccess.cs" />

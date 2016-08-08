@@ -3,7 +3,7 @@ using System.Net.Http;
 using Microsoft.Owin.Hosting;
 using TechTalk.SpecFlow;
 using WebApiStarter.AcceptanceTests.SelfHosting;
-using WebApiStarter.Components.Example;
+using WebApiStarter.Components.Example.Model;
 
 namespace WebApiStarter.AcceptanceTests.Tests.Example
 {

@@ -4,7 +4,7 @@ using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 using Ninject;
 using Ninject.Web.Common;
 using WebApiStarter;
-using WebApiStarter.Components.Example;
+using WebApiStarter.Components.Example.Service;
 using WebApiStarter.Layers.DataAccessLayer;
 
 [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(NinjectWebCommon), "Start")]
@@ -38,7 +38,7 @@ namespace WebApiStarter
         /// Creates the kernel that will manage your application.
         /// </summary>
         /// <returns>The created kernel.</returns>
-        private static IKernel CreateKernel()
+        public static IKernel CreateKernel()
         {
             var kernel = new StandardKernel();
             try
