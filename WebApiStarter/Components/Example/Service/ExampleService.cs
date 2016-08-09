@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web.DynamicData;
-using CacheCow.Common.Helpers;
 using WebApiStarter.Commons.ExtensionMethods;
 using WebApiStarter.Components.Example.Model;
 using WebApiStarter.Layers.DataAccessLayer;
@@ -20,7 +18,7 @@ namespace WebApiStarter.Components.Example.Service
             _databaseAccess = new MySqlDatabaseAccess();
         }
 
-        // Required for Ninject
+        // Required for Dependency Injection
         public ExampleService(IDatabaseAccess databaseAccess)
         {
             _databaseAccess = databaseAccess;
@@ -41,20 +39,19 @@ namespace WebApiStarter.Components.Example.Service
             if (results.IsNullOrEmpty())
                 CustomExceptionService.ThrowItemNotFoundException();
 
-            // ReSharper disable once AssignNullToNotNullAttribute
             return results.First();
         }
 
         public ExampleModel Create(ExampleModel model)
         {
+            string id = model.Id ?? Guid.NewGuid().ToString();
+
             var parameters = new Dictionary<string, object>
             {
+                { "P_Id",    id             },
                 { "P_Prop1", model.Prop1    },
                 { "P_Prop2", model.Prop2    }
             };
-
-            string id = model.Id ?? Guid.NewGuid().ToString();
-            parameters.Add("P_Id", id);
 
             return CallDb("PS_CreateExample", parameters).First();
         }

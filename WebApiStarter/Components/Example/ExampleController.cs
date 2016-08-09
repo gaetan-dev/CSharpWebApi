@@ -16,7 +16,7 @@ namespace WebApiStarter.Components.Example
             _exampleService = new ExampleService();
         }
 
-        // Required for Ninject
+        // Required for Dependency Injection
         public ExampleController(IExampleService service)
         {
             _exampleService = service;
