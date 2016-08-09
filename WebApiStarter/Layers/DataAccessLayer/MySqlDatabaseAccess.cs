@@ -2,61 +2,37 @@
 using System.Configuration;
 using System.Data;
 using MySql.Data.MySqlClient;
-using WebApiStarter.Components;
-using WebApiStarter.Components.Example.Model;
 
 namespace WebApiStarter.Layers.DataAccessLayer
 {
-    public class MySqlDatabaseAccess : IDatabaseAccess
+    public sealed class MySqlDatabaseAccess : DatabaseAccess
     {
-        private MySqlConnection _connection;
-        private MySqlCommand    _command;
-
-        public List<T> ExecuteStoredProcedure<T>(string storedProcedureName, Dictionary<string, object> parameters = null) where T : IModel, new()
+      public override List<T> ExecuteStoredProcedure<T>(string storedProcedureName, Dictionary<string, object> parameters = null)
         {
-            using (_connection = new MySqlConnection(ConfigurationManager.ConnectionStrings["mysqlConnection"].ConnectionString))
+            using (Connection = new MySqlConnection(ConfigurationManager.ConnectionStrings["mysqlConnection"].ConnectionString))
             {
                 SetupCommand(storedProcedureName, parameters);
 
-                _connection.Open();
+                Connection.Open();
 
                 return ExecuteReader<T>();
             }
         }
 
-        private List<T> ExecuteReader<T>() where T : IModel, new()
+        protected override void SetupCommand(string storedProcedureName, Dictionary<string, object> parameters = null)
         {
-            List<T> results = new List<T>();
-
-            IDataReader reader = _command.ExecuteReader();
-
-            ComponentFactory factory = new ExampleModelFactory();
-
-            while (reader.Read())
-            {
-                T model = (T) factory.CreateModel(reader);
-                if (!model.IsEmpty())
-                    results.Add(model);
-            }
-
-            reader.Close();
-            return results;
-        }
-
-        private void SetupCommand(string storedProcedureName, Dictionary<string, object> parameters = null)
-        {
-            _command = new MySqlCommand(storedProcedureName, _connection)
+            Command = new MySqlCommand
             {
                 CommandType = CommandType.StoredProcedure,
                 CommandText = storedProcedureName,
-                Connection = _connection
+                Connection  = (MySqlConnection) Connection
             };
 
             if (parameters != null)
             {
                 foreach (var key in parameters.Keys)
                 {
-                    _command.Parameters.AddWithValue(key, parameters[key]);
+                    ((MySqlCommand) Command).Parameters.AddWithValue(key, parameters[key]);
                 }
             }
         }
